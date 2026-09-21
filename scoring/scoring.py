@@ -86,12 +86,12 @@ def score_compactness(
     Large gaps between classes reduce the score.
     """
 
-    group_id = allocation.section.id
+    group_id = allocation.section.student_group
 
     group_allocations = [
         a
         for a in allocations
-        if a.section.id == group_id
+        if a.section.student_group == group_id
         and a.timeslot.day == allocation.timeslot.day
     ]
 

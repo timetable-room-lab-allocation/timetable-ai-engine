@@ -1,13 +1,11 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
-
 from models.section import Section
 from models.lecturer import Lecturer
 from models.room import Room
 from models.timeslot import TimeSlot
 from models.allocation import Allocation
-
 from engine.recommendation_engine import generate_recommendations
 
 

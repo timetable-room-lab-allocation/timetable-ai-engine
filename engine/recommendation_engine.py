@@ -34,6 +34,7 @@ def generate_recommendations(
         )
 
         recommendations.append({
+            "room_id": allocation.room.id,
             "room": allocation.room.name,
 
             "day": allocation.timeslot.day,
