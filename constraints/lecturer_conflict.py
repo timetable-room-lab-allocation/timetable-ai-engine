@@ -8,18 +8,20 @@ def check_lecturer_conflict(
     for existing in existing_allocations:
 
         same_lecturer = (
-            allocation.lecturer.id == existing.lecturer.id
+            allocation.lecturer.id
+            == existing.lecturer.id
         )
 
         same_timeslot = (
-            allocation.timeslot == existing.timeslot
+            allocation.timeslot.day
+            == existing.timeslot.day
+            and allocation.timeslot.start
+            == existing.timeslot.start
+            and allocation.timeslot.end
+            == existing.timeslot.end
         )
 
-        different_section = (
-            allocation.section.id != existing.section.id
-        )
-
-        if same_lecturer and same_timeslot and different_section:
+        if same_lecturer and same_timeslot:
             return {
                 "feasible": False,
                 "constraint": "lecturer_conflict",

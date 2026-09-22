@@ -14,11 +14,10 @@ def generate_feasible_allocations(
     timeslots,
     existing_allocations
 ):
-
     feasible_allocations = []
+    rejected_allocations = []
 
     for room in rooms:
-
         for timeslot in timeslots:
 
             allocation = Allocation(
@@ -34,9 +33,27 @@ def generate_feasible_allocations(
             )
 
             if result["feasible"]:
-                feasible_allocations.append(
-                    allocation
-                )
+                feasible_allocations.append(allocation)
+
+            else:
+                rejected_allocations.append({
+                    "room": room.name,
+                    "room_id": room.id,
+                    "day": timeslot.day,
+                    "start": timeslot.start,
+                    "end": timeslot.end,
+                    "violations": result["violations"]
+                })
+
+    print("\n========== AI DEBUG ==========")
+    print("TOTAL FEASIBLE:", len(feasible_allocations))
+    print("TOTAL REJECTED:", len(rejected_allocations))
+
+    for item in rejected_allocations:
+        print("\nREJECTED:")
+        print(item)
+
+    print("========== END DEBUG ==========\n")
 
     return feasible_allocations
 
@@ -48,15 +65,12 @@ def rank_feasible_allocations(
     timeslots,
     existing_allocations
 ):
-
-    feasible_allocations = (
-        generate_feasible_allocations(
-            section,
-            lecturer,
-            rooms,
-            timeslots,
-            existing_allocations
-        )
+    feasible_allocations = generate_feasible_allocations(
+        section,
+        lecturer,
+        rooms,
+        timeslots,
+        existing_allocations
     )
 
     ranked_allocations = rank_allocations(

@@ -13,16 +13,15 @@ def check_room_conflict(
         )
 
         same_timeslot = (
-            allocation.timeslot
-            == existing.timeslot
+            allocation.timeslot.day
+            == existing.timeslot.day
+            and allocation.timeslot.start
+            == existing.timeslot.start
+            and allocation.timeslot.end
+            == existing.timeslot.end
         )
 
-        different_section = (
-            allocation.section.id
-            != existing.section.id
-        )
-
-        if same_room and same_timeslot and different_section:
+        if same_room and same_timeslot:
             return {
                 "feasible": False,
                 "constraint": "room_conflict",
