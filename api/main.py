@@ -78,6 +78,13 @@ def root():
     return {
         "message": "Timetable AI Engine is running"
     }
+    
+@app.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "service": "fastapi-ai-engine"
+    }    
 
 
 # =========================
